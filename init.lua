@@ -15,7 +15,6 @@ function M.nvim_wez_nav(window, command, key, mods)
 	end
 	local title = pane:get_title()
 	if title == "nvim" then
-		wezterm.log_info("inside if block")
 		window:perform_action(act.SendKey({ key = key, mods = mods }), pane)
 	else
 		window:perform_action(command, pane)
