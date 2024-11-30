@@ -23,7 +23,7 @@ for _, keybinding in ipairs(nvim_wez_navigator.keybindings()) do
 end
 ```
 
-Make sure to install [nvim-wez-navigator.nvim](https://github.com/kedarmd/nvim-wez-navigator.nvim) repository.
+Make sure to install [nvim-wez-navigator.nvim](https://github.com/kedarmd/nvim-wez-navigator.nvim) plugin.
 You can install `nvim-wez-navigator` using your preferred plugin manager. For example, with [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
