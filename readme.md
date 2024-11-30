@@ -28,6 +28,6 @@ You can install `nvim-wez-navigator` using your preferred plugin manager. For ex
 
 ```lua
 require('lazy').setup({
-  'kedarmd/nvim-wez-navigator',
+  'kedarmd/nvim-wez-navigator.nvim',
 })
 
