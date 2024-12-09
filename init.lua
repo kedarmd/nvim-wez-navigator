@@ -1,40 +1,47 @@
 local wezterm = require("wezterm")
-local act = wezterm.action
-local nvim_wez_nav = require("helpers/navigator").nvim_wez_nav
+local move = require("helpers/navigator").move
 
 local M = {}
 
-function M.keybindings()
-	local keybindings = {
-		{
-			key = "h",
-			mods = "CTRL",
+---@class Keymap
+---@field key string
+---@field mods string
+---@field direction "Left" | "Right" | "Up" | "Down"
+
+---@type Keymap[]
+local default_keymaps = {
+	{ key = "h", mods = "CTRL", direction = "Left" },
+	{ key = "j", mods = "CTRL", direction = "Down" },
+	{ key = "k", mods = "CTRL", direction = "Up" },
+	{ key = "l", mods = "CTRL", direction = "Right" },
+}
+
+---
+---@param user_keymaps Keymap[] | nil
+---@return table
+function M.keybindings(user_keymaps)
+	local keybindings = {}
+
+	---@param keymap Keymap
+	local function insert_to_keybindings(keymap)
+		keybindings.insert({
+			key = keymap.key,
+			mods = keymap.mods,
 			action = wezterm.action_callback(function(window)
-				nvim_wez_nav(window, act.ActivatePaneDirection("Left"), "h", "CTRL")
+				move(window, keymap.direction, keymap.key, keymap.mods)
 			end),
-		},
-		{
-			key = "j",
-			mods = "CTRL",
-			action = wezterm.action_callback(function(window)
-				nvim_wez_nav(window, act.ActivatePaneDirection("Down"), "j", "CTRL")
-			end),
-		},
-		{
-			key = "k",
-			mods = "CTRL",
-			action = wezterm.action_callback(function(window)
-				nvim_wez_nav(window, act.ActivatePaneDirection("Up"), "k", "CTRL")
-			end),
-		},
-		{
-			key = "l",
-			mods = "CTRL",
-			action = wezterm.action_callback(function(window)
-				nvim_wez_nav(window, act.ActivatePaneDirection("Right"), "l", "CTRL")
-			end),
-		},
-	}
+		})
+	end
+
+	if user_keymaps then
+		for _, keymap in ipairs(user_keymaps) do
+			insert_to_keybindings(keymap)
+		end
+	else
+		for _, keymap in ipairs(default_keymaps) do
+			insert_to_keybindings(keymap)
+		end
+	end
 	return keybindings
 end
 

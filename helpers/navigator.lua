@@ -20,6 +20,14 @@ local function nvim_wez_nav(window, command, key, mods)
 	end
 end
 
+--- @param window unknown
+--- @param direction "Left" | "Right" | "Up" | "Down"
+--- @param key string
+--- @param mods string
+local move = function(window, direction, key, mods)
+	nvim_wez_nav(window, act.ActivatePaneDirection(direction), key, mods)
+end
+
 return {
-	nvim_wez_nav = nvim_wez_nav,
+	move = move,
 }
